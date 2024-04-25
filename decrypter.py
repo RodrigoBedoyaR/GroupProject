@@ -4,7 +4,7 @@ from cryptography.fernet import Fernet
 files = []
 #this goes through the current directory and puts the files on a list
 for file in os.listdir():
-    if file == "decoder.py" or file == "encoder.py" or file == ".git" or file =="TheKey.key":
+    if file == "decrypter.py" or file == "encrypter.py" or file == ".git" or file =="TheKey.key":
         continue
     #without this directories will also be added, and we also want files.
     if(os.path.isfile(file)):
