@@ -21,7 +21,7 @@ userInput = input("Enter the password to unlock the content:\n")
 if secretWord == userInput:
     for file in files:
         with open(file, 'rb') as theFile:
-            contentOfFiles = theFile.read
+            contentOfFiles = theFile.read()
         #Decrypt data
         decryptedContent = Fernet(secretKey).decrypt(contentOfFiles)
 

