@@ -42,6 +42,8 @@ def get_all_files(root_dir):
             all_files.append(full_path)
     return all_files
 
+
+
 files = get_all_files(root_dir)
 key = Fernet.generate_key()
 
